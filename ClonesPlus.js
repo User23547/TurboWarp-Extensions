@@ -46,7 +46,7 @@
     class ClonesPlus {
       getInfo() {
         return {
-          id: "lmsclonesplus",
+          id: "lmsclonesplusplus",
           name: "Clones+",
           color1: "#FFAB19",
           color2: "#EC9C13",
