@@ -2,7 +2,7 @@
     'use strict';
 
     if (!Scratch.extensions.unsandboxed) {
-    throw new Error('This extension must run unsandboxed');
+    throw new Error('This example must run unsandboxed');
     }
 
     const Cast = Scratch.Cast;
@@ -81,12 +81,13 @@
             }
             return uniqueVars.map((i) => ({
                 text: i.name,
-                value: i.id,
+                value: i.name,
             }));
         }
 
         getVar(args, util) {
-            const variable = util.target.lookupVariableById(Scratch.Cast.toString(args.VAR));
+            const variable = util.target.lookupVariableByNameAndType(Scratch.Cast.toString(args.VAR), "");
+            // const variable = util.target.lookupVariableById(Scratch.Cast.toString(args.VAR));
             //const vari = util.target.lookupOrCreateVariable(args.VAR.id, arsg.VAR.name);
             if (variable) {
                 return variable ? variable.value : "";
@@ -95,7 +96,8 @@
         }
 
         setVar(args, util) {
-            const variable = util.target.lookupVariableById(Scratch.Cast.toString(args.VAR));
+            const variable = util.target.lookupVariableByNameAndType(Scratch.Cast.toString(args.VAR), "");
+            // const variable = util.target.lookupVariableById(Scratch.Cast.toString(args.VAR));
             if (variable) {
                 variable.value = args.VALUE;
 
@@ -106,7 +108,8 @@
         }
 
         changeVar(args, util) {
-            const variable = util.target.lookupVariableById(Scratch.Cast.toString(args.VAR));
+            const variable = util.target.lookupVariableByNameAndType(Scratch.Cast.toString(args.VAR), "");
+            //const variable = util.target.lookupVariableById(Scratch.Cast.toString(args.VAR));
             if (variable) {
                 const castedValue = Cast.toNumber(variable.value);
                 const dValue = Cast.toNumber(args.VALUE);
