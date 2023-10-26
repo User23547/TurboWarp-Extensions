@@ -56,6 +56,13 @@
                                 defaultValue: 1
                             }
                         }
+                    },
+                    "---",
+                    {
+                        blockType: Scratch.BlockType.REPORTER,
+                        opcode: 'variables',
+                        text: 'list variables',
+                        disableMonitor: true
                     }
                 ],
                 menus: {
@@ -68,21 +75,25 @@
         }
         
         getVars() {
-            const globalVars = Object.values(vm.runtime.getTargetForStage().variables).filter((x) => x.type == "");
-            const localVars = Object.values(vm.editingTarget.variables).filter((x) => x.type == "");
-            const uniqueVars = [...new Set([...globalVars, ...localVars])];
-            if (uniqueVars.length === 0) {
-            return [
-                    {
-                        text: "",
-                        value: "",
-                    },
-                ];
-            }
-            return uniqueVars.map((i) => ({
-                text: i.name,
-                value: i.name,
-            }));
+            const globalVars = Object.values(vm.runtime.getTargetForStage().variables).map(x => x.name);
+            const localVars = Object.values(vm.editingTarget.variables).map(x => x.name)
+            return globalVars.concat(localVars);
+
+            // const globalVars = Object.values(vm.runtime.getTargetForStage().variables).filter((x) => x.type == "");
+            // const localVars = Object.values(vm.editingTarget.variables).filter((x) => x.type == "");
+            // const uniqueVars = [...new Set([...globalVars, ...localVars])];
+            // if (uniqueVars.length === 0) {
+            // return [
+            //         {
+            //             text: "",
+            //             value: "",
+            //         },
+            //     ];
+            // }
+            // return uniqueVars.map((i) => ({
+            //     text: i.name,
+            //     value: i.name,
+            // }));
         }
 
         getVar(args, util) {
@@ -120,6 +131,12 @@
                     util.ioQuery('cloud', 'requestUpdateVariable', [variable.name, newValue]);
                 }
             }
+        }
+
+        variables(args, util) {
+            const globalVars = Object.values(vm.runtime.getTargetForStage().variables).map(x => x.name);
+            const localVars = Object.values(util.target.variables).map(x => x.name)
+            return JSON.stringify(globalVars.concat(localVars));
         }
     }
     
