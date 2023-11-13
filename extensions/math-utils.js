@@ -89,6 +89,18 @@
                 },
                 "---",
                 {
+                    opcode: 'boolean',
+                    blockType: Scratch.BlockType.BOOLEAN,
+                    text: '[input]',
+                    arguments: {
+                        input: {
+                            type: Scratch.ArgumentType.STRING,
+                            defaultValue: ''
+                        }
+                    },
+                    disableMonitor: true
+                },
+                {
                     opcode: 'true',
                     blockType: Scratch.BlockType.BOOLEAN,
                     text: 'true',
@@ -371,6 +383,10 @@
             return Math.min(Math.max(value, min), max);
         }
 
+        boolean(args) {
+            return Cast.toBoolean(args.input);
+        }
+            
         true(args) {
             return true;
         }
