@@ -15,6 +15,18 @@
                 color1: "#59c059",
                 blocks: [
                     {
+                        opcode: "string",
+                        blockType: Scratch.BlockType.REPORTER,
+                        text: "[input]",
+                        arguments: {
+                            input: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: "apple",
+                            }
+                        },
+                        disableMonitor: true,
+                    },
+                    {
                         opcode: "substring",
                         blockType: Scratch.BlockType.REPORTER,
                         text: "letters [start] to [end] of [text]",
@@ -269,6 +281,11 @@
             };
         }
 
+        
+        string(args) {
+            return Cast.toString(args.input);
+        }
+        
         substring(args) {
             const text = Cast.toString(args.text);
             const start = Cast.toNumber(args.start);
