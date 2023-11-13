@@ -26,6 +26,7 @@
                         },
                         disableMonitor: true,
                     },
+                    "---",
                     {
                         opcode: "substring",
                         blockType: Scratch.BlockType.REPORTER,
