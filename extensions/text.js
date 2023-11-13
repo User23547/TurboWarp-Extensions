@@ -152,7 +152,7 @@
                         arguments: {
                             text: {
                                 type: Scratch.ArgumentType.STRING,
-                                defaultValue: "apple"
+                                defaultValue: "apple "
                             },
                             times: {
                                 type: Scratch.ArgumentType.NUMBER,
