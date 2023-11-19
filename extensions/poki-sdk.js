@@ -73,30 +73,30 @@
                     {
                         opcode: 'commercial_break',
                         blockType: Scratch.BlockType.COMMAND,
-                        text: 'commercial break',
+                        text: 'run commercial ad',
                     },
                     {
                         opcode: 'rewarded_break',
                         blockType: Scratch.BlockType.COMMAND,
-                        text: 'rewarded break',
+                        text: 'run rewarded ad',
                     },
                     {
                         opcode: 'break_running',
                         blockType: Scratch.BlockType.BOOLEAN,
-                        text: 'break running?',
+                        text: 'ad running?',
                         disableMonitor: true,
                     },
                     {
                         opcode: 'rewarded_break_success',
                         blockType: Scratch.BlockType.BOOLEAN,
-                        text: 'rewarded break success?',
+                        text: 'rewarded ad success?',
                         disableMonitor: true,
                     },
                     '---',
                     {
-                        opcode: 'when_break_started',
+                        opcode: 'when_break_starts',
                         blockType: Scratch.BlockType.EVENT,
-                        text: 'when [BREAK_TYPE] started',
+                        text: 'when [BREAK_TYPE] starts',
                         isEdgeActivated: false,
                         arguments: {
                             BREAK_TYPE: {
@@ -106,9 +106,9 @@
                         }
                     },
                     {
-                        opcode: 'when_break_ended',
+                        opcode: 'when_break_ends',
                         blockType: Scratch.BlockType.EVENT,
-                        text: 'when [BREAK_TYPE] ended',
+                        text: 'when [BREAK_TYPE] ends',
                         isEdgeActivated: false,
                         arguments: {
                             BREAK_TYPE: {
@@ -120,7 +120,11 @@
 				],
 				menus: {
                     break_type: {
-                        items: ['commercial break', 'rewarded break']
+                        items: [
+                            { text: 'any ad', value: 'any' },
+                            { text: 'commercial ad', value: 'commercial break' },
+                            { text: 'rewarded ad', value: 'rewarded break' },
+                        ]
                     }
 				}
 			};
@@ -172,16 +176,20 @@
             if (onPoki) {
                 PokiSDK.commercialBreak(() => {
                     breakContinues = true;
-                    util.startHats('pokisdk_when_break_started', { BREAK_TYPE: 'commercial break' });
+                    util.startHats('pokisdk_when_break_starts', { BREAK_TYPE: 'commercial break' });
+                    util.startHats('pokisdk_when_break_starts', { BREAK_TYPE: 'any' });
                     PokiSDK.gameplayStop();
                 }).then(() => {
                     breakContinues = false;
-                    util.startHats('pokisdk_when_break_ended', { BREAK_TYPE: 'commercial break' });
+                    util.startHats('pokisdk_when_break_ends', { BREAK_TYPE: 'commercial break' });
+                    util.startHats('pokisdk_when_break_ends', { BREAK_TYPE: 'any' });
                     PokiSDK.gameplayStart();
                 });
             } else {
-                util.startHats('pokisdk_when_break_started', { BREAK_TYPE: 'commercial break' });
-                util.startHats('pokisdk_when_break_ended', { BREAK_TYPE: 'commercial break' });
+                util.startHats('pokisdk_when_break_starts', { BREAK_TYPE: 'commercial break' });
+                util.startHats('pokisdk_when_break_starts', { BREAK_TYPE: 'any' });
+                util.startHats('pokisdk_when_break_ends', { BREAK_TYPE: 'commercial break' });
+                util.startHats('pokisdk_when_break_ends', { BREAK_TYPE: 'any' });
                 console.log('Commercial break launched')
             }
         }
@@ -190,18 +198,21 @@
             if (onPoki) {
                 PokiSDK.rewardedBreak(() => {
                     breakContinues = true;
-                    util.startHats('pokisdk_when_break_started', { BREAK_TYPE: 'rewarded break' });
+                    util.startHats('pokisdk_when_break_starts', { BREAK_TYPE: 'rewarded break' });
+                    util.startHats('pokisdk_when_break_starts', { BREAK_TYPE: 'any' });
                     PokiSDK.gameplayStop();
                 }).then((success) => {
                     breakContinues = false;
                     rewardedBreakSucces = success;
-                    util.startHats('pokisdk_when_break_ended', { BREAK_TYPE: 'rewarded break' });
+                    util.startHats('pokisdk_when_break_ends', { BREAK_TYPE: 'rewarded break' });
                     PokiSDK.gameplayStart();
                 });
             } else {
                 rewardedBreakSucces = true;
-                util.startHats('pokisdk_when_break_started', { BREAK_TYPE: 'rewarded break' });
-                util.startHats('pokisdk_when_break_ended', { BREAK_TYPE: 'commercial break' });
+                util.startHats('pokisdk_when_break_starts', { BREAK_TYPE: 'rewarded break' });
+                util.startHats('pokisdk_when_break_starts', { BREAK_TYPE: 'any' });
+                util.startHats('pokisdk_when_break_ends', { BREAK_TYPE: 'commercial break' });
+                util.startHats('pokisdk_when_break_ends', { BREAK_TYPE: 'any' });
                 console.log('Rewarded break launched')
             }
         }
