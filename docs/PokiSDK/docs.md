@@ -4,7 +4,7 @@ This extension allows you to launch ads in your game when it is published on [Po
 
 ## Basic
 
-<img src="/docs/PokiSDK/assets/images/onPokiBlock.svg" width="200" height="200">
+<img src="/docs/PokiSDK/assets/images/onPokiBlock.svg" width="100" height="100">
 
 This checks whether project is running on [Poki](https://poki.com/). If `false` ads won't be displayed.
 
