@@ -8,4 +8,4 @@ This extension allows you to launch ads in your game when it is published on [Po
 
 This checks whether project is running on [Poki](https://poki.com/). If `false` ads won't be displayed.
 
--
+--
