@@ -448,7 +448,7 @@
         plusMinusEqual(args) {
             const a = Cast.toNumber(args.A);
             const b = Cast.toNumber(args.B);
-            const c = Cast.toNumber(args.C);
+            const c = Math.abs(Cast.toNumber(args.C));
             return a >= b -c && a <= b + c;
         }
 
