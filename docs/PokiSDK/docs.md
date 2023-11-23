@@ -8,7 +8,7 @@ This extension allows you to easly use Poki SDK when your game is published on [
 
 'on Poki?'
 
-Checks whether project is running on [Poki](https://poki.com), if not all blocks won't work.
+Check whether the project is running on [Poki](https://poki.com), if not all blocks won't work.
 
 'game loaded'
 
