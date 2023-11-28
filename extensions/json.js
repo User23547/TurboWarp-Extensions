@@ -25,6 +25,8 @@
         id: "skyhigh173JSON",
         name: "JSON",
         color1: "#3271D0",
+        color2: "#2d66bb",
+        color3: "#295cab",
         blocks: [
           makeLabel("General Utils"),
           {
