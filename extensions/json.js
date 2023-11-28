@@ -250,6 +250,25 @@
             },
           },
           {
+            opcode: "json_array_fromto",
+            blockType: Scratch.BlockType.REPORTER,
+            text: "items [item] to [item2] of array [json]",
+            arguments: {
+              json: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: "[1,2,3,4]",
+              },
+              item: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 2,
+              },
+              item2: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 3,
+              },
+            },
+          },
+          {
             opcode: "json_array_push",
             blockType: Scratch.BlockType.REPORTER,
             text: "add [item] to array [json]",
@@ -264,6 +283,7 @@
               },
             },
           },
+          "---",
           {
             opcode: "json_array_set",
             blockType: Scratch.BlockType.REPORTER,
@@ -283,7 +303,6 @@
               },
             },
           },
-          // ======== ADDED ================================================================
           {
             opcode: "json_array_replace_all",
             blockType: Scratch.BlockType.REPORTER,
@@ -303,6 +322,30 @@
               },
             },
           },
+          {
+            opcode: "json_array_replace_items",
+            blockType: Scratch.BlockType.REPORTER,
+            text: "replace items from [pos1] to [pos2] of [json] with [item]",
+            arguments: {
+              pos1: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 3,
+              },
+              pos2: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 5,
+              },
+              json: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '["a", "b", "c", "d", "e", "f"]',
+              },
+              item: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: "TurboWarp",
+              },
+            },
+          },
+          "---",
           {
             opcode: "json_array_insert",
             blockType: Scratch.BlockType.REPORTER,
@@ -384,7 +427,7 @@
               },
             },
           },
-          makeLabel("Advanced"),
+          makeLabel("Strings"),
           {
             opcode: "json_array_from",
             blockType: Scratch.BlockType.REPORTER,
@@ -393,96 +436,6 @@
               json: {
                 type: Scratch.ArgumentType.STRING,
                 defaultValue: "abcd",
-              },
-            },
-          },
-          {
-            opcode: "json_array_fromto",
-            blockType: Scratch.BlockType.REPORTER,
-            text: "items [item] to [item2] of array [json]",
-            arguments: {
-              json: {
-                type: Scratch.ArgumentType.STRING,
-                defaultValue: "[1,2,3,4]",
-              },
-              item: {
-                type: Scratch.ArgumentType.NUMBER,
-                defaultValue: 2,
-              },
-              item2: {
-                type: Scratch.ArgumentType.NUMBER,
-                defaultValue: 3,
-              },
-            },
-          },
-          {
-            opcode: "json_array_reverse",
-            blockType: Scratch.BlockType.REPORTER,
-            text: "reverse array [json]",
-            arguments: {
-              json: {
-                type: Scratch.ArgumentType.STRING,
-                defaultValue: '["a","b","c","d","e","f"]',
-              },
-            },
-          },
-          {
-            opcode: "json_array_flat",
-            blockType: Scratch.BlockType.REPORTER,
-            text: "flat array [json] by depth [depth]",
-            arguments: {
-              json: {
-                type: Scratch.ArgumentType.STRING,
-                defaultValue: "[[1],2,[3,4],[5,[6]]]",
-              },
-              depth: {
-                type: Scratch.ArgumentType.NUMBER,
-                defaultValue: 2,
-              },
-            },
-          },
-          {
-            opcode: "json_array_concat",
-            blockType: Scratch.BlockType.REPORTER,
-            text: "array concat [json] [json2]",
-            arguments: {
-              json: {
-                type: Scratch.ArgumentType.STRING,
-                defaultValue: '["a","b"]',
-              },
-              json2: {
-                type: Scratch.ArgumentType.STRING,
-                defaultValue: '["c","d"]',
-              },
-            },
-          },
-          {
-            opcode: "json_array_filter",
-            blockType: Scratch.BlockType.REPORTER,
-            text: "get all values with key [key] in array [json]",
-            arguments: {
-              key: {
-                type: Scratch.ArgumentType.STRING,
-                defaultValue: "id",
-              },
-              json: {
-                type: Scratch.ArgumentType.STRING,
-                defaultValue: '[{"id":12},{"id":24}]',
-              },
-            },
-          },
-          {
-            opcode: "json_array_setlen",
-            blockType: Scratch.BlockType.REPORTER,
-            text: "set length of array [json] to [len]",
-            arguments: {
-              json: {
-                type: Scratch.ArgumentType.STRING,
-                defaultValue: '["a","b","c"]',
-              },
-              len: {
-                type: Scratch.ArgumentType.NUMBER,
-                defaultValue: 2,
               },
             },
           },
@@ -514,6 +467,110 @@
               d: {
                 type: Scratch.ArgumentType.STRING,
                 defaultValue: ",",
+              },
+            },
+          },
+          makeLabel("Advanced"),
+          {
+            opcode: "json_array_reverse",
+            blockType: Scratch.BlockType.REPORTER,
+            text: "reverse array [json]",
+            arguments: {
+              json: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '["a","b","c","d","e","f"]',
+              },
+            },
+          },
+          {
+            opcode: "json_array_flat",
+            blockType: Scratch.BlockType.REPORTER,
+            text: "flat array [json] by depth [depth]",
+            arguments: {
+              json: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: "[[1],2,[3,4],[5,[6]]]",
+              },
+              depth: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 2,
+              },
+            },
+          },
+          "---",
+          {
+            opcode: "json_array_concat",
+            blockType: Scratch.BlockType.REPORTER,
+            text: "array concat [json] [json2]",
+            arguments: {
+              json: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '["a", "b"]',
+              },
+              json2: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '["c", "d"]',
+              },
+            },
+          },
+          {
+            opcode: "json_array_intersection",
+            blockType: Scratch.BlockType.REPORTER,
+            text: "array intersection [json] [json2]",
+            arguments: {
+              json: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '["a", "b", "c"]',
+              },
+              json2: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '["b", "c", "d"]',
+              },
+            },
+          },
+          {
+            opcode: "json_array_difference",
+            blockType: Scratch.BlockType.REPORTER,
+            text: "array difference [json] [json2]",
+            arguments: {
+              json: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '["a", "b", "c"]',
+              },
+              json2: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '["b", "c"]',
+              },
+            },
+          },
+          "---",
+          {
+            opcode: "json_array_filter",
+            blockType: Scratch.BlockType.REPORTER,
+            text: "get all values with key [key] in array [json]",
+            arguments: {
+              key: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: "id",
+              },
+              json: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '[{"id": 12}, {"id": 24}]',
+              },
+            },
+          },
+          {
+            opcode: "json_array_setlen",
+            blockType: Scratch.BlockType.REPORTER,
+            text: "set length of array [json] to [len]",
+            arguments: {
+              json: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '["a","b","c"]',
+              },
+              len: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 2,
               },
             },
           },
@@ -887,6 +944,26 @@
       }
     }
 
+    json_array_intersection({ json, json2 }) {
+      try {
+        json = JSON.parse(json);
+        json2 = JSON.parse(json2);
+        return JSON.stringify(json.filter(item => json2.includes(item)));
+      } catch {
+        return "";
+      }
+    }
+
+    json_array_difference({ json, json2 }) {
+      try {
+        json = JSON.parse(json);
+        json2 = JSON.parse(json2);
+        return JSON.stringify(json.filter(item => !json2.includes(item)));
+      } catch {
+        return "";
+      }
+    }
+
     json_array_push({ item, json }) {
       try {
         json = JSON.parse(json);
@@ -922,23 +999,37 @@
     }
 
     json_array_replace_all({ item2, item, json }) {
-        try {
-          json = JSON.parse(json);
-          let i = 0;
-          while (i < json.length) {
-            if (json[i] === item) {
-              json[i] = this._fixInvalidJSONValues(this.json_valid_return(item2));
-            }
-            else {
-              ++i;
-            }
+      try {
+        json = JSON.parse(json);
+        let i = 0;
+        while (i < json.length) {
+          if (json[i] === item) {
+            json[i] = this._fixInvalidJSONValues(this.json_valid_return(item2));
           }
-          return JSON.stringify(json);
-        } catch {
-          return "";
+          else {
+            ++i;
+          }
         }
+        return JSON.stringify(json);
+      } catch {
+        return "";
       }
+    }
 
+    json_array_replace_items({ pos1, pos2, json, item }) {
+      try {
+        json = JSON.parse(json);
+        for (let i = 0; i < json.length; i++) {
+          if (pos1 <= i + 1 && i + 1 <= pos2) {
+            json[i] = this._fixInvalidJSONValues(this.json_valid_return(item));
+          }
+        }
+        return JSON.stringify(json);
+      } catch {
+        return "";
+      }
+    }
+    
     json_array_delete({ item, json }) {
       try {
         json = JSON.parse(json);
