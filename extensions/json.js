@@ -384,7 +384,7 @@
             },
           },
           {
-            opcode: "json_array_remove_all",
+            opcode: "json_array_delete_all",
             blockType: Scratch.BlockType.REPORTER,
             text: "delete all [item] in array [json]",
             arguments: {
@@ -395,6 +395,25 @@
               json: {
                 type: Scratch.ArgumentType.STRING,
                 defaultValue: '["scratch","a","TurboWarp","a","a"]',
+              },
+            },
+          },
+          {
+            opcode: "json_array_delete_fromto",
+            blockType: Scratch.BlockType.REPORTER,
+            text: "delete items [pos1] to [pos2] of array [json]",
+            arguments: {
+              pos1: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 2,
+              },
+              pos2: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 3,
+              },
+              json: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '["scratch", "forkphorus", "PenguinMod", "TurboWarp"]',
               },
             },
           },
@@ -1107,7 +1126,7 @@
       }
     }
 
-    json_array_remove_all({ item, json }) {
+    json_array_delete_all({ item, json }) {
       try {
         json = JSON.parse(json);
         item = this._fixInvalidJSONValues(this.json_valid_return(item));
@@ -1120,6 +1139,17 @@
           }
         }
         return JSON.stringify(json);
+      } catch {
+        return "";
+      }
+    }
+
+    json_array_delete_fromto({ pos1, pos2, json }) {
+      try {
+        json = JSON.parse(json);
+        pos1 = Scratch.Cast.toNumber(pos1);
+        pos2 = Scratch.Cast.toNumber(pos2);
+        return JSON.stringify(json.filter((e, i) => !(pos1 <= i + 1 && i + 1 <= pos2)));
       } catch {
         return "";
       }
