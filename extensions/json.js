@@ -415,6 +415,21 @@
             },
           },
           {
+            opcode: "json_array_itemH_all",
+            blockType: Scratch.BlockType.REPORTER,
+            text: "all item # of [item] in array [json]",
+            arguments: {
+              item: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: "scratch",
+              },
+              json: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '["scratch","TurboWarp", "scratch"]',
+              },
+            },
+          },
+          {
             opcode: "json_array_count_item",
             blockType: Scratch.BlockType.REPORTER,
             text: "count [item] in array [json]",
@@ -545,6 +560,21 @@
               },
             },
           },
+          {
+            opcode: "json_array_disjoint",
+            blockType: Scratch.BlockType.BOOLEAN,
+            text: "are [json] [json2] disjoint?",
+            arguments: {
+              json: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '["a", "b"]',
+              },
+              json2: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '["c", "d"]',
+              },
+            },
+          },
           "---",
           {
             opcode: "json_array_filter",
@@ -625,7 +655,7 @@
         menus: {
           get_all: {
             acceptReporters: true,
-            items: ["keys", "values", "datas"],
+            items: ["keys", "values", "datas", "pairs"],
           },
           get_list: {
             acceptReporters: true,
@@ -819,6 +849,13 @@
             return JSON.stringify(
               Object.keys(json).map((key) => [key, json[key]])
             );
+          case "pairs": 
+            return JSON.stringify(Object.keys(json).map((key) => {
+              return {
+                key: key,
+                value: json[key]
+              };
+            }));
           default:
             return "";
         }
@@ -916,6 +953,24 @@
       }
     }
 
+    json_array_itemH_all({ item, json }) {
+      try {
+        json = JSON.parse(json);
+        item = this._fixInvalidJSONValues(this.json_valid_return(item));
+        let result = [];
+        if (json.includes(item)) {
+          for (const index in json) {
+            if (json[index] === item) {
+              result.push(Number(index) + 1);
+            }
+          }
+        }
+        return JSON.stringify(result);
+      } catch {
+        return "";
+      }
+    }
+
     json_array_count_item({ item, json }) {
       try {
         json = JSON.parse(json);
@@ -963,6 +1018,16 @@
         return JSON.stringify(json.filter(item => !json2.includes(item)));
       } catch {
         return "";
+      }
+    }
+
+    json_array_disjoint({ json, json2 }) {
+      try {
+        json = JSON.parse(json);
+        json2 = JSON.parse(json2);
+        return (json.filter(item => !json2.includes(item))).length === 0;
+      } catch {
+        return false;
       }
     }
 
