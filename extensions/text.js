@@ -13,6 +13,8 @@
                 id: "stringextension",
                 name: "Text",
                 color1: "#59c059",
+                color2: "#50ad50",
+                color3: "#479a47",
                 blocks: [
                     {
                         opcode: "string",
@@ -268,6 +270,28 @@
                             }
                         }
                     },
+                    "---",
+                    {
+                        opcode: "newLine",
+                        blockType: Scratch.BlockType.REPORTER,
+                        text: "new line",
+                        disableMonitor: true
+                    },
+                    {
+                        opcode: "readLine",
+                        blockType: Scratch.BlockType.REPORTER,
+                        text: "read line [line] from [text]",
+                        arguments: {
+                            text: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: "Text with\nmultiple lines"
+                            },
+                            line: {
+                                type: Scratch.ArgumentType.NUMBER,
+                                defaultValue: 1
+                            }
+                        }
+                    },
                 ],
                 menus: {
                     startsEndsWithMenu: {
@@ -337,7 +361,7 @@
         count(args) {
             const text = Cast.toString(args.text);
             const letter = Cast.toString(args.letter);
-            return text.split("").filter(x => x == letter).length;
+            return text.split(letter).length - 1;
         }
 
         repeat(args) {
@@ -394,7 +418,7 @@
         isCase(args) {
             const text = Cast.toString(args.text);
             const textCase = Cast.toString(args.textCase);
-            switch(textCase) {
+            switch(textCase.toLowerCase()) {
                 case "lowercase":
                     return text.toLowerCase() === text;
                 case "uppercase":
@@ -408,7 +432,7 @@
         toCase(args) {
             const text = Cast.toString(args.text);
             const textCase = Cast.toString(args.textCase);
-            switch(textCase) {
+            switch(textCase.toLowerCase()) {
                 case "lowercase":
                     return text.toLowerCase();
                 case "uppercase":
@@ -417,6 +441,17 @@
                     return "";
             }
             return "";
+        }
+
+        newLine() {
+            return "\n";
+        }
+
+        readLine(args) {
+            const text = Cast.toString(args.text);
+            const line = Cast.toNumber(args.line) - 1;
+            const splitted = text.split("\n");
+            return line >= 0 && line < splitted.length ? splitted[line] : "";
         }
     }
     
