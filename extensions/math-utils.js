@@ -112,6 +112,33 @@
                     text: 'false',
                     disableMonitor: true
                 },
+                "---",
+                {
+                    opcode: 'matConditional',
+                    blockType: Scratch.BlockType.BOOLEAN,
+                    text: '[A] ⇒ [B]',
+                    arguments: {
+                        A: {
+                            type: Scratch.ArgumentType.BOOLEAN,
+                        },
+                        B: {
+                            type: Scratch.ArgumentType.BOOLEAN,
+                        }
+                    }
+                },
+                {
+                    opcode: 'matBiconditional',
+                    blockType: Scratch.BlockType.BOOLEAN,
+                    text: '[A] ⇔ [B]',
+                    arguments: {
+                        A: {
+                            type: Scratch.ArgumentType.BOOLEAN,
+                        },
+                        B: {
+                            type: Scratch.ArgumentType.BOOLEAN,
+                        }
+                    }
+                },
                 // "---",
                 // {
                 //     opcode: 'nand',
@@ -301,6 +328,21 @@
                 },
                 "---",
                 {
+                    opcode: 'isNumberType',
+                    blockType: Scratch.BlockType.BOOLEAN,
+                    text: 'is [type] [value]?',
+                    arguments: {
+                        value: {
+                            type: Scratch.ArgumentType.STRING,
+                            defaultValue: ""
+                        },
+                        type: {
+                            type: Scratch.ArgumentType.STRING,
+                            menu: "number_types_menu"
+                        },
+                    },
+                },
+                {
                     opcode: 'isNumber',
                     blockType: Scratch.BlockType.BOOLEAN,
                     text: 'is number [value]?',
@@ -309,7 +351,8 @@
                             type: Scratch.ArgumentType.STRING,
                             defaultValue: ""
                         }
-                    }
+                    },
+                    hideFromPalette: true
                 },
                 {
                     opcode: 'isSafeNumber',
@@ -320,7 +363,8 @@
                             type: Scratch.ArgumentType.NUMBER,
                             defaultValue: ""
                         }
-                    }
+                    },
+                    hideFromPalette: true
                 },
                 {
                     opcode: 'isInt',
@@ -331,7 +375,8 @@
                             type: Scratch.ArgumentType.NUMBER,
                             defaultValue: ""
                         }
-                    }
+                    },
+                    hideFromPalette: true
                 },
                 {
                     opcode: 'isFloat',
@@ -342,13 +387,32 @@
                             type: Scratch.ArgumentType.NUMBER,
                             defaultValue: ""
                         }
-                    }
+                    },
+                    hideFromPalette: true
+                },
+                {
+                    opcode: 'isMultiple',
+                    blockType: Scratch.BlockType.BOOLEAN,
+                    text: 'is [A] multiple of [B]?',
+                    arguments: {
+                        A: {
+                            type: Scratch.ArgumentType.NUMBER,
+                            defaultValue: 100
+                        },
+                        B: {
+                            type: Scratch.ArgumentType.NUMBER,
+                            defaultValue: 10
+                        },
+                    },
                 },
             ],
             menus: {
                 round_modes_menu: {
                     acceptReporters: true,
                     items: ["round", "floor", "ceiling"]
+                },
+                number_types_menu: {
+                    items: ["number", "safe number", "integer", "float", "prime"]
                 }
             }
         };
@@ -393,6 +457,23 @@
 
         false(args) {
             return false;
+        }
+
+        _matConditional(a, b) {
+            return !a || b;
+        }
+
+        matConditional(args) {
+            const a = Cast.toBoolean(args.A);
+            const b = Cast.toBoolean(args.B);
+            return this._matConditional(a, b);
+        }
+
+        
+        matBiconditional(args) {
+            const a = Cast.toBoolean(args.A);
+            const b = Cast.toBoolean(args.B);
+            return this._matConditional(a, b) && this._matConditional(b, a);
         }
 
         moreOrEqual(args) {
@@ -476,6 +557,18 @@
             return NaN;
         }
 
+        isNumberType(args) {
+            const type = Cast.toString(args.type);
+            switch(type) {
+                case "number": return typeof args.value === "number";
+                case "safe number": return Number.isSafeInteger(Cast.toNumber(args.value));
+                case "integer": return this.isInt({ value: args.value });
+                case "float": return this.isFloat({ value: args.value });
+                case "prime": return this.isPrime({ value: args.value });
+                default: return false;
+            }
+        }
+
         isSafeNumber(args) {
             const value = Cast.toNumber(args.value);
             return Number.isSafeInteger(value);
@@ -493,6 +586,24 @@
         isFloat(args) {
             const value = Cast.toNumber(args.value);
             return Math.round(value) !== value && value !== NaN;
+        }
+
+        isPrime(args) {
+            const value = Cast.toNumber(args.value);
+            const number = Math.trunc(value);
+            if (number <= 1) return false;
+            for (var i = 2; i < number; i++) {
+                if (number % i === 0) {
+                    return false;
+                }                
+            }
+            return true;
+        }
+
+        isMultiple(args) {
+            const a = Cast.toNumber(args.A);
+            const b = Cast.toNumber(args.B);
+            return a % b === 0;
         }
     }
     
