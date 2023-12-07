@@ -226,6 +226,22 @@
           },
           makeLabel("Array"),
           {
+            opcode: "json_array_new_fromto",
+            blockType: Scratch.BlockType.REPORTER,
+            text: "array from [min] to [max]",
+            arguments: {
+              min: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 1,
+              },
+              max: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 10,
+              },
+            },
+          },
+          "---",
+          {
             opcode: "json_length",
             blockType: Scratch.BlockType.REPORTER,
             text: "length of array [json]",
@@ -934,6 +950,16 @@
     json_jlength({ json }) {
       // same function
       return this.json_length({ json: json });
+    }
+
+    json_array_new_fromto({ min, max}) {
+      let result = [];
+      let i = Math.min(min, max);
+      while (i <= Math.max(min, max)) {
+        result.push(i);
+        i++;
+      }
+      return JSON.stringify(result);
     }
 
     json_array_get({ item, json }) {
