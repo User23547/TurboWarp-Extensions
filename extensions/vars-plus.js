@@ -76,12 +76,29 @@
                                 menu: "variablesAccessMenu"
                             }
                         }
+                    },
+                    "---",
+                    {
+                        opcode: "inherit",
+                        blockType: Scratch.BlockType.COMMAND,
+                        text: "inherit [variable]",
+                        filter: [Scratch.TargetType.SPRITE],
+                        arguments: {
+                            variable: {
+                                type: Scratch.ArgumentType.STRING,
+                                menu: "localVariablesMenu"
+                            }
+                        }
                     }
                 ],
                 menus: {
                     variablesMenu: {
                         acceptReporters: true,
                         items: "_getVarsList"
+                    },
+                    localVariablesMenu: {
+                        acceptReporters: true,
+                        items: "_getLocalVarsList"
                     },
                     variablesAccessMenu: {
                         items: ["all", "global", "local"]
@@ -94,6 +111,22 @@
             const globalVars = Object.values(runtime.getTargetForStage().variables).filter(v => v.type === "");
             const localVars = Object.values(vm.editingTarget.variables).filter(v => v.type === "");
             const uniqueVars = [...new Set([...globalVars, ...localVars])];
+            if (uniqueVars.length === 0) {
+                return [{
+                    text: "",
+                    value: ""
+                }];
+            }
+            return uniqueVars.map(v => ({
+                text: v.name,
+                value: v.id,
+            }));
+        }
+
+        _getLocalVarsList() {
+            const globalVars = Object.values(runtime.getTargetForStage().variables).filter(v => v.type === "");
+            const localVars = Object.values(vm.editingTarget.variables).filter(v => v.type === "");
+            const uniqueVars = localVars.filter(v => !globalVars.includes(v));
             if (uniqueVars.length === 0) {
                 return [{
                     text: "",
@@ -158,7 +191,16 @@
             }
         }
 
-
+        inherit(args, util) {
+            const target = util.target;
+            const variable = util.target.lookupVariableById(Cast.toString(args.variable));
+            if (variable && !target.isOriginal && !target.isStage) {
+                const originalVariable = target.sprite.clones[0].lookupVariableById(Cast.toString(args.variable));
+                if (originalVariable) {
+                    variable.value = originalVariable.value;
+                }
+            }
+        }
     }
 
     Scratch.extensions.register(new Extension());
