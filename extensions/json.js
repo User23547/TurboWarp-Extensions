@@ -228,7 +228,7 @@
           {
             opcode: "json_array_new_fromto",
             blockType: Scratch.BlockType.REPORTER,
-            text: "array from [min] to [max]",
+            text: "numbers from [min] to [max]",
             arguments: {
               min: {
                 type: Scratch.ArgumentType.NUMBER,
