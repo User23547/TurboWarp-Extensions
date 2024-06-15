@@ -22,7 +22,7 @@
     class JSONS {
       getInfo() {
         return {
-          id: "skyhigh173JSON",
+          id: "skyhigh173JSONextended",
           name: "JSON",
           color1: "#3271D0",
           color2: "#2d66bb",
