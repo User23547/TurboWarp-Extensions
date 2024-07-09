@@ -69,26 +69,6 @@
                 },
                 "---",
                 {
-                    opcode: 'clamp',
-                    blockType: Scratch.BlockType.REPORTER,
-                    text: 'clamp [VALUE] between [MIN] and [MAX]',
-                    arguments: {
-                        VALUE: {
-                            type: Scratch.ArgumentType.NUMBER,
-                            defaultValue: 50
-                        },
-                        MIN: {
-                            type: Scratch.ArgumentType.NUMBER,
-                            defaultValue: 0
-                        },
-                        MAX: {
-                            type: Scratch.ArgumentType.NUMBER,
-                            defaultValue: 100
-                        },
-                    }
-                },
-                "---",
-                {
                     opcode: 'boolean',
                     blockType: Scratch.BlockType.BOOLEAN,
                     text: '[input]',
@@ -276,6 +256,25 @@
                     }
                 },
                 {
+                    opcode: 'clamp',
+                    blockType: Scratch.BlockType.REPORTER,
+                    text: 'clamp [VALUE] between [MIN] and [MAX]',
+                    arguments: {
+                        VALUE: {
+                            type: Scratch.ArgumentType.NUMBER,
+                            defaultValue: 50
+                        },
+                        MIN: {
+                            type: Scratch.ArgumentType.NUMBER,
+                            defaultValue: 0
+                        },
+                        MAX: {
+                            type: Scratch.ArgumentType.NUMBER,
+                            defaultValue: 100
+                        },
+                    }
+                },
+                {
                     opcode: 'round',
                     blockType: Scratch.BlockType.REPORTER,
                     text: '[roundMode] [value] to [precision] decimal places',
@@ -328,12 +327,23 @@
                 },
                 "---",
                 {
+                    opcode: 'isNumber',
+                    blockType: Scratch.BlockType.BOOLEAN,
+                    text: 'is number [value]?',
+                    arguments: {
+                        value: {
+                            type: Scratch.ArgumentType.STRING,
+                            defaultValue: ""
+                        }
+                    },
+                },
+                {
                     opcode: 'isNumberType',
                     blockType: Scratch.BlockType.BOOLEAN,
                     text: 'is [type] [value]?',
                     arguments: {
                         value: {
-                            type: Scratch.ArgumentType.STRING,
+                            type: Scratch.ArgumentType.NUMBER,
                             defaultValue: ""
                         },
                         type: {
@@ -412,7 +422,7 @@
                     items: ["round", "floor", "ceiling"]
                 },
                 number_types_menu: {
-                    items: ["number", "safe number", "integer", "float", "prime"]
+                    items: ["safe number", "integer", "float", "prime"]
                 }
             }
         };
